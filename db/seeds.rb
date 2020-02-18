@@ -15,7 +15,8 @@ Attendance.destroy_all
 15.times do
 	prenom = Faker::Name.first_name
 	nom = Faker::Name.last_name
-	User.create(email: "#{prenom}.#{nom}@yopmail.com", first_name: prenom, last_name: nom, description: Faker::Quotes::Shakespeare.romeo_and_juliet_quote)
+	user = User.new(email: "#{prenom}.#{nom}@yopmail.com", password: 'topsecret', password_confirmation: 'topsecret', first_name: prenom, last_name: nom, description: Faker::Quotes::Shakespeare.romeo_and_juliet_quote)
+	user.save
 end
 
 5.times do
