@@ -13,14 +13,14 @@
 		<div class="row justify-content-between align-items-center mx-auto">
 			<% Event.all.each do |each_event| %>	
 				<div class="col-lg-4 col-md-6 col-sm-12 my-2">
-					<div class="card mx-auto" style="width: 14rem; height: 18rem;">
+					<div class="card mx-auto" style="width: 14rem text-truncate">
 						<img class="card-img-top" src="https://dummyimage.com/280x140/c215c2/fff&text=event_bg_img" alt="Card image cap"> 
 						<div class="card-body p-3">
-							<p class="small card-subtitle"><%= each_event.start_date %></p>
-							<p class="card-title"><b><%= each_event.title %></b></p>
-							<p class="card-text text-truncate"><%= each_event.description %></p>
-							<%= link_to "Voir l'Évènement", event_path(each_event.id), class: "btn btn-primary" %>
-
+							<p class="small card-subtitle text-right"><%= each_event.start_date.to_formatted_s(:long) %></p>
+							<p class="card-text"><%= link_to "#{each_event.admin.first_name}", user_path(each_event.admin.id) %> a créé cet évènement</p>
+							<p class="card-title my-1"><b><%= each_event.title %></b></p>
+							<p class="card-text" style="height: 6rem; overflow: hidden; margin-bottom: 1rem;"><%= each_event.description %></p>
+							<%= link_to "Voir l'Évènement", event_path(each_event.id), class: "btn btn-info btn-block" %>
 						</div>
 					</div>
 				</div>

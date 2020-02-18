@@ -1,0 +1,55 @@
+<div class="container my-2">
+
+	<!-- INFORMATIONS DU PROFIL -->
+
+	<p class="small text-right">Compte créé sur EventBrite le <%= @user.created_at.to_formatted_s(:long_ordinal) %><p>
+	<h2 class="font-weight-bold py-0 my-0">Informations du compte</h2>
+	<hr>
+	<h4 class="font-weight-bold">Adresse e-mail du compte</h4>
+	<p><%= @user.email %></p>
+	<h4 class="font-weight-bold">Identité</h4>
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-6 p-0">
+				<h6 class="font-weight-bold">Prénom</h6>
+				<p><%= @user.first_name %></p>
+			</div>
+			<div class="col-6 p-0">
+				<h6 class="font-weight-bold">Nom</h6>
+				<p><%= @user.last_name %></p>
+			</div>
+			<h6 class="font-weight-bold">Description</h6>
+			<p><%= @user.description %></p>
+		</div>	
+	</div>	
+
+
+	<!-- BOUTONS EDITION -->
+	<% if @user == current_user %>
+		<div class="container">
+			<div class="row justify-content-between">
+				<%= link_to "Éditer les informations du Profil", edit_user_path, class: "btn btn-warning rounded-0" %>
+				<%= link_to "Éditer les informations de Connexion", edit_user_registration_path, class: "btn btn-danger rounded-0" %>
+			</div>
+		</div>
+	<% end %>
+
+	<hr>
+
+	<!-- LISTE DES EVENEMENTS -->
+	<h2 class="font-weight-bold">Évènements créés par <%= @user.first_name %></h2>
+	<% if @user.events.count == 0 %>
+		<p class="px-0"><%= @user.first_name %> n'a jamais créé d'évènement.</p>
+	<% else %>
+		<div class="list-group">
+			<% @user.events.each do |each_event| %> 
+				<div class="row justify-content-between list-group-item">
+					<a href="<% event_path(each_event.id) %>">
+						<div class="col-6"><%= each_event.title %></div>
+					</a>
+					<div class="col-6"><%= each_event.start_date.to_formatted_s(:long_ordinal)%></div>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+</div>
