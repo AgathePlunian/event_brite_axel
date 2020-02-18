@@ -20,15 +20,15 @@ class Event < ApplicationRecord
 	validate :valid_duration?
 	validate :valid_start_date?
 
+	private
+	
 	def valid_duration?
 		if (self.duration % 5 != 0)
 			self.errors.add(:duration, 
-											"ERREUR - La Duree doit etre un multiple de 5.")
-		puts "ERREUR - Duree invalide"
+											"ERREUR - La Duree (en minutes) doit etre multiple de 5.")
 		elsif (self.duration > 0 && self.duration < 5)
 			self.errors.add(:duration, 
 											"ERREUR - La Duree doit etre positive.")
-		puts "ERREUR - Duree invalide"
 		end
 	end
 
@@ -36,7 +36,6 @@ class Event < ApplicationRecord
 		if (self.start_date < DateTime.now)
 			self.errors.add(:start_date,
 											"ERREUR - Vous ne pouvez creer d'evenement que dans le futur.")
-		puts "ERREUR - Date invalide"
 		end
 	end
 end

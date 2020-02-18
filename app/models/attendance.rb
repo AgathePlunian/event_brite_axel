@@ -1,4 +1,7 @@
 class Attendance < ApplicationRecord
+	# MAILER CALLBACK
+	after_create :new_attendant_send
+
 	# LINK
 	belongs_to :event
 	belongs_to :user
@@ -10,7 +13,6 @@ class Attendance < ApplicationRecord
 		if (self.user == event.admin)
 			self.errors.add(:user,
 											"ERREUR - Vous ne pouvez pas vous inscrire a votre propre Evenement.")
-			puts "ERROR - user is admin"
 		end
 	end	
 
@@ -19,8 +21,13 @@ class Attendance < ApplicationRecord
 		self.event.users.each do |each_user|
 			if new_guest == each_user
 				self.errors.add(:user, "ERREUR - Vous etes deja inscrit a cet evenement.")
-				puts "ERROR - Already attending"
 			end
 		end
 	end
+
+	# MAILER
+
+  def new_attendant_send
+		UserMailer.new_attendant_email(self.event, self.user).deliver_now
+  end
 end
